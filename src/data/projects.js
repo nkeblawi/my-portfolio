@@ -28,12 +28,12 @@ If seasonal RMSE rises above a certain threshold, data drift may be indicated, w
     problem: `Operational decision-makers need timely weather data and model forecasts so they can make time-sensitive decisions. This project outlines how I met that need.`,
     summary: `I engineered a new event-driven pipeline that delivered customized emails containing selected weather forecast maps to clients the moment the underlying model data became available. This was critical in an environment where speed is essential for operational decision-making. Source data came from scheduled model runs by NOAA, ECMWF, and emerging AI weather models.
 
-Clients were given the ability to build their own email templates and choose which forecast maps each email contained, with their preferences stored as metadata in a database. A dedicated compute process assembled each personalized email once the required data was available, and a serverless delivery layer then rendered it as an HTML message and sent it through a third-party mailer's API.
+Clients were given the ability to build their own email templates and choose which forecast maps each email contained, with their preferences stored as metadata in a database. A dedicated compute process assembled each custom email once the required data was available, and a serverless delivery layer then rendered it as an HTML message and sent it through a third-party mailer's API.
 
 I built it for reliability as well as speed. Every send was tracked with a success/failure status. Failed deliveries were routed to a dead-letter queue, and alerts were logged for investigation.
 
 The pipeline actually outpaced the downstream mailer's API rate limits, so I implemented throttling (backpressure) to regulate the send rate and stay within the provider's constraints without compromising on delivery speed.`,
-    results: `This pipeline reduced source-to-inbox delivery time by at least an order of magnitude (from minutes to seconds) compared to the legacy baseline. Clients received personalized forecast maps almost immediately after each model run completion.
+    results: `This pipeline reduced source-to-inbox delivery time by at least an order of magnitude (from minutes to seconds) compared to the legacy baseline. Clients received customized forecast maps almost immediately after each model run completion.
 
 The system reliably handled a high daily volume of customized emails across a large client base. Production-grade observability, per-message success/failure tracking, a dead-letter queue for failed sends, and logged alerts ensured reliable delivery with failures being extremely rare.`,
   },
