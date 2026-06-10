@@ -9,8 +9,11 @@ const currentPath = Astro.url.pathname;
 
 <header id="site-header" class="border-b border-navy-dark bg-navy sticky top-0 z-50">
   <nav class="max-w-[1080px] mx-auto px-6 h-16 flex items-center justify-between">
-    <a href="/" class="text-white font-semibold text-lg tracking-tight hover:text-blue-accent transition-colors duration-150">
-      Nabeel Keblawi
+    <a href="/" class="text-white hover:text-blue-accent transition-colors duration-150">
+      <span class="hidden min-[768px]:inline font-semibold text-lg tracking-tight">Nabeel Keblawi</span>
+      <svg class="min-[768px]:hidden" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+      </svg>
     </a>
     <div class="flex items-center gap-6">
       <ul class="flex items-center gap-8 list-none m-0 p-0">
