@@ -1,17 +1,156 @@
 ---
-
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { projects } from "../data/projects.js";
+import { earlyCareer } from "../data/earlyCareer.js";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Nabeel Keblawi — Data Pipelines, ML Models, AI Agents">
+  <!-- Hero -->
+  <div class="mb-14">
+    <h1 class="text-4xl font-bold text-navy mb-3">Hi, my name is Nabeel.</h1>
+    <p class="text-text-secondary text-xl text-center">
+      <span id="cycling-title" class="text-navy font-semibold"></span><span class="cycling-cursor">|</span>
+    </p>
+  </div>
+
+  <style>
+    .cycling-cursor {
+      display: inline-block;
+      margin-left: 1px;
+      color: var(--color-blue-accent);
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    #cycling-title {
+      display: inline-block;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    #cycling-title.fade-out {
+      opacity: 0;
+      transform: translateX(-18px);
+    }
+    #cycling-title.fade-in-start {
+      opacity: 0;
+      transform: translateX(18px);
+      transition: none;
+    }
+  </style>
+
+  <script>
+    const titles = [
+      "Data Engineer",
+      "Data Scientist",
+      "Analytics Engineer",
+      "Meteorologist",
+      "AI/ML Engineer",
+      "Environmental Scientist",
+    ];
+    let current = 0;
+    const el = document.getElementById("cycling-title");
+    if (el) {
+      el.textContent = titles[0];
+      setInterval(() => {
+        el.classList.add("fade-out");
+        setTimeout(() => {
+          current = (current + 1) % titles.length;
+          el.classList.remove("fade-out");
+          el.classList.add("fade-in-start");
+          el.textContent = titles[current];
+          // Force reflow so the transition fires
+          el.getBoundingClientRect();
+          el.classList.remove("fade-in-start");
+        }, 300);
+      }, 2500);
+    }
+  </script>
+
+  <!-- Recent Projects heading -->
+  <h2 class="text-2xl font-semibold text-navy mb-3 text-center fade-up">Things I've Built From Data to Impact</h2>
+  <p class="text-text-secondary text-center mb-8 fade-up">Click to learn what I did for each fun project</p>
+
+  <!-- Project Grid -->
+  <section class="mb-20">
+    <div class="grid grid-cols-1 min-[768px]:grid-cols-2 gap-6">
+      {projects.map((project, i) => (
+        <a
+          href={`/project/${project.slug}`}
+          class="fade-up group block bg-white border border-border rounded hover:border-blue-accent hover:shadow-md transition-all duration-200"
+          data-delay={i * 60}
+        >
+          <div class="aspect-video bg-surface rounded-t flex items-center justify-center overflow-hidden">
+            {project.image ? (
+              <img src={project.image} alt={project.title} class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" />
+            ) : (
+              <span class="text-text-secondary text-xs">Image coming soon</span>
+            )}
+          </div>
+          <div class="p-5">
+            <h2 class="text-base font-semibold text-navy mb-2 group-hover:text-blue-accent transition-colors duration-150 leading-snug">
+              {project.title}
+            </h2>
+            <p class="text-text-secondary text-sm leading-relaxed">
+              {project.impact}
+            </p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Early Career -->
+  <section>
+    <h2 class="text-2xl font-semibold text-navy mb-1 text-center fade-up">Foundational Career Projects</h2>
+    <br />
+    <div class="grid grid-cols-1 min-[768px]:grid-cols-2 gap-6">
+      {earlyCareer.map((item, i) => (
+        <div class="fade-up bg-white border border-border rounded overflow-hidden transition-all duration-200 hover:border-blue-accent hover:shadow-md" data-delay={i * 60}>
+          <div class="aspect-video bg-surface flex items-center justify-center overflow-hidden">
+            {item.image ? (
+              <img src={item.image} alt={item.title} class="w-full h-full object-cover transition-transform duration-300 hover:scale-[1.03]" />
+            ) : (
+              <span class="text-text-secondary text-xs">Image coming soon</span>
+            )}
+          </div>
+          <div class="p-5">
+            <h3 class="text-base font-semibold text-navy mb-0.5 leading-snug">{item.title}</h3>
+            <p class="text-blue-accent text-xs font-medium mb-2">{item.org}</p>
+            <p class="text-text-secondary text-sm leading-relaxed">{item.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <style>
+    .fade-up {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+
+  <script>
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const delay = parseInt((entry.target as HTMLElement).dataset.delay ?? '0', 10);
+            setTimeout(() => {
+              entry.target.classList.add('visible');
+            }, delay);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
+    );
+    document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+  </script>
+</BaseLayout>

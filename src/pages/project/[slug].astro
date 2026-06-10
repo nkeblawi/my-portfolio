@@ -1,0 +1,197 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { projects, getProjectBySlug } from "../../data/projects.js";
+
+export function getStaticPaths() {
+  return projects.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const project = getProjectBySlug(slug);
+
+if (!project) {
+  return Astro.redirect("/");
+}
+
+// Helper: images for a given section
+function sectionImages(sectionName) {
+  return (project.intraImages || []).filter((img) => img.section === sectionName);
+}
+---
+
+<BaseLayout title={`${project.title} — Nabeel Keblawi`} description={project.impact}>
+
+  <!-- Back link -->
+  <div class="mb-10 fade-up">
+    <a href="/" class="text-sm text-text-secondary hover:text-navy transition-colors duration-150">
+      ← Back to portfolio
+    </a>
+  </div>
+
+  <!-- Header -->
+  <div class="mb-10 fade-up">
+    <h1 class="text-3xl font-bold text-navy mb-4 leading-snug">{project.title}</h1>
+    <p class="text-lg text-text-secondary leading-relaxed border-l-4 border-blue-accent pl-4">
+      {project.impact}
+    </p>
+  </div>
+
+  <!-- Feature image -->
+  <div class="aspect-video bg-surface rounded border border-border mb-12 flex items-center justify-center overflow-hidden fade-up">
+    {project.image ? (
+      <img src={project.image} alt={project.title} class="w-full h-full object-cover" />
+    ) : (
+      <span class="text-text-secondary text-sm">Feature image coming soon</span>
+    )}
+  </div>
+
+  <!-- Content sections -->
+  <div class="space-y-12">
+
+    <!-- Problem -->
+    <section class="fade-up">
+      <h2 class="text-xl font-semibold text-navy mb-4">Problem</h2>
+      <div class="text-text leading-relaxed space-y-4">
+        {project.problem.split("\n\n").map((para, idx) => (
+          <>
+            <p>{para}</p>
+            {sectionImages("problem").filter(img => img.afterParagraph === idx).map(img => (
+              <figure class="my-4">
+                <img src={img.src} alt={img.caption || project.title} class="w-full rounded border border-border" />
+                {img.caption && <figcaption class="text-text-secondary text-sm mt-2">{img.caption}</figcaption>}
+              </figure>
+            ))}
+          </>
+        ))}
+      </div>
+    </section>
+
+    <!-- Summary -->
+    <section class="fade-up">
+      <h2 class="text-xl font-semibold text-navy mb-4">Summary</h2>
+      <div class="text-text leading-relaxed space-y-4">
+        {project.summary.split("\n\n").map((para, idx) => (
+          <>
+            <p>{para}</p>
+            {sectionImages("summary").filter(img => img.afterParagraph === idx).map(img => (
+              <figure class="my-4">
+                <img src={img.src} alt={img.caption || project.title} class="w-full rounded border border-border" />
+                {img.caption && <figcaption class="text-text-secondary text-sm mt-2">{img.caption}</figcaption>}
+              </figure>
+            ))}
+          </>
+        ))}
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="fade-up">
+      <h2 class="text-xl font-semibold text-navy mb-4">Results</h2>
+      <div class="text-text leading-relaxed space-y-4">
+        {project.results.split("\n\n").map((para, idx) => (
+          <>
+            <p>{para}</p>
+            {sectionImages("results").filter(img => img.afterParagraph === idx).map(img => (
+              <figure class="my-4">
+                <img src={img.src} alt={img.caption || project.title} class="w-full rounded border border-border" />
+                {img.caption && <figcaption class="text-text-secondary text-sm mt-2">{img.caption}</figcaption>}
+              </figure>
+            ))}
+          </>
+        ))}
+      </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="fade-up">
+      <h2 class="text-xl font-semibold text-navy mb-4">Tech Stack</h2>
+      <div class="flex flex-wrap gap-2">
+        {project.techStack.map((tech) => (
+          <span class="tech-chip">
+            {tech}
+          </span>
+        ))}
+      </div>
+    </section>
+
+    <!-- GitHub -->
+    {project.github && (
+      <section class="fade-up">
+        <h2 class="text-xl font-semibold text-navy mb-4">GitHub</h2>
+        <a
+          href={project.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-accent hover:underline text-sm"
+        >
+          {project.github}
+        </a>
+      </section>
+    )}
+    {project.github === null && (
+      <section class="fade-up">
+        <h2 class="text-xl font-semibold text-navy mb-4">GitHub</h2>
+        <p class="text-text-secondary text-sm">Confidential — code not publicly available.</p>
+      </section>
+    )}
+
+  </div>
+
+  <!-- Footer nav -->
+  <div class="mt-16 pt-8 border-t border-border fade-up">
+    <a href="/" class="text-sm text-text-secondary hover:text-navy transition-colors duration-150">
+      ← Back to portfolio
+    </a>
+  </div>
+
+</BaseLayout>
+
+<style>
+  .fade-up {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .tech-chip {
+    display: inline-block;
+    background: var(--color-blue-light);
+    color: var(--color-navy);
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .tech-chip:hover {
+    border-color: var(--color-blue-accent);
+    background: #d6e9f8;
+  }
+
+  figure img {
+    transition: transform 0.3s ease;
+  }
+  figure img:hover {
+    transform: scale(1.01);
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
+  );
+  document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+</script>

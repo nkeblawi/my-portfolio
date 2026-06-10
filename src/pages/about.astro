@@ -1,0 +1,225 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="About — Nabeel Keblawi" description="Data professional with roots in atmospheric science.">
+
+  <!-- Hero -->
+  <div class="mb-10 fade-up">
+    <h1 class="text-4xl font-bold text-navy mb-4">About Me</h1>
+    <p class="text-text-secondary text-lg text-center">Data engineer. Meteorologist at heart. Perpetual learner.</p>
+  </div>
+
+  <!-- Animated stat counters -->
+  <div class="stats-grid mb-14 fade-up">
+    <div class="stat-card">
+      <div class="stat-number" data-target="21">0</div>
+      <div class="stat-label">Years of Experience</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" data-target="26">0</div>
+      <div class="stat-label">Countries Traveled</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" data-target="8">0</div>
+      <div class="stat-label">Years Consulting</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" data-target="5">0</div>
+      <div class="stat-label">Years in Vietnam</div>
+    </div>
+  </div>
+
+  <!-- Intro paragraphs -->
+  <div class="space-y-5 text-text mb-16">
+    <p class="fade-up">Hi there! I'm a data professional with roots in atmospheric science and the curiosity to poke around at datasets and find interesting tidbits that most people don't already know.</p>
+    <p class="fade-up">What I find fulfilling is building pipelines where data flows from a raw source and transforms into a product people find interesting or useful.</p>
+    <p class="fade-up">The best feeling is when I fight through roadblocks, bugs, errors, and finally get the entire pipeline and end-user application to work.</p>
+  </div>
+
+  <!-- Career section -->
+  <div class="fade-up mb-6">
+    <h2 class="text-xl font-semibold text-navy mb-1">A little background on my career</h2>
+    <div class="w-10 h-0.5 bg-blue-accent"></div>
+  </div>
+  <div class="space-y-5 text-text mb-6 fade-up">
+    <p>Early in my career, I became a meteorologist because I was fascinated with the complexities of weather and climate phenomena. Turns out, that's exactly what drew me to data science and data engineering!</p>
+    <p>My career experience covers several industries, including aviation, weather forecasting, climate science, renewable energy, marketing, and finance.</p>
+  </div>
+
+  <!-- Industry chips — right after the industries sentence -->
+  <div class="flex flex-wrap gap-2 mb-6 fade-up">
+    {["Aviation", "Meteorology", "Climate Science", "Renewable Energy", "Marketing", "Finance"].map(industry => (
+      <span class="industry-chip">{industry}</span>
+    ))}
+  </div>
+
+  <div class="space-y-5 text-text mb-6 fade-up">
+    <p>I also ran my own consulting practice for eight years. The business side taught me to ask the right questions to understand the requirements before writing a single line of code. I've sat on both sides of the table long enough to understand what organizations actually need, not just what the data says.</p>
+    <p>This requirements-first mindset is baked into how I approach every project.</p>
+    <p>I firmly believe in using the right tools to solve problems (as opposed to the latest shiny object). Why? I've seen things break in production at 3 am. Learned those lessons the hard way, and I've got the battle scars to prove it.</p>
+  </div>
+
+  <!-- Personal section -->
+  <div class="fade-up mb-6">
+    <h2 class="text-xl font-semibold text-navy mb-1">Some personal tidbits about myself</h2>
+    <div class="w-10 h-0.5 bg-blue-accent"></div>
+  </div>
+  <div class="space-y-5 text-text mb-16 fade-up">
+    <p>I was born and raised in Northern Virginia. I live in Ashburn with my wife and two small kids. I'm a weather nerd who compares model forecasts whenever we have impending severe weather or winter storms. I love traveling off the beaten path. Have already set foot in 42 US states and 26 countries.</p>
+    <p>What most people don't know about me is that I lived in Vietnam for five years, during which I met my wife, learned the language, ran my consulting business, and had my first child.</p>
+    <p>One more thing worth knowing: I'm deaf. It shapes who I am and how I communicate. I put together an <a href="/accommodations" class="text-blue-accent hover:underline">accommodations page</a> with everything you need to know about communicating with me.</p>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-block fade-up">
+    <p class="text-text font-medium text-lg mb-5">That's me in a nutshell. If you think we'd work well together, shoot me an email. I'm happy to share my resume if needed.</p>
+    <a href="mailto:kebnab@gmail.com" class="cta-button">
+      Get in Touch
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;margin-left:8px;vertical-align:middle">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </div>
+
+</BaseLayout>
+
+<style>
+  .fade-up {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stat grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .stat-card {
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 24px 12px;
+    text-align: center;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    cursor: default;
+  }
+  .stat-card:hover {
+    border-color: var(--color-blue-accent);
+    box-shadow: 0 4px 16px rgba(74, 144, 217, 0.12);
+    transform: translateY(-2px);
+  }
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-navy);
+    line-height: 1;
+    margin-bottom: 6px;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* Industry chips */
+  .industry-chip {
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 999px;
+    background: var(--color-blue-light);
+    color: var(--color-navy);
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: 1px solid transparent;
+    transition: border-color 0.15s ease, background 0.15s ease;
+    cursor: default;
+  }
+  .industry-chip:hover {
+    border-color: var(--color-blue-accent);
+    background: #d6e9f8;
+  }
+
+  /* CTA block */
+  .cta-block {
+    background: var(--color-blue-light);
+    border-left: 4px solid var(--color-blue-accent);
+    border-radius: 0 8px 8px 0;
+    padding: 28px 32px;
+  }
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    background: var(--color-navy);
+    color: white;
+    font-size: 1.025rem;
+    font-weight: 600;
+    padding: 10px 22px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .cta-button:hover {
+    background: var(--color-navy-dark);
+    transform: translateY(-1px);
+  }
+</style>
+
+<script>
+  // Scroll-triggered fade-up
+  const fadeObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, 0);
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
+  );
+  document.querySelectorAll('.fade-up').forEach((el) => fadeObserver.observe(el));
+
+  // Staggered stat card fade
+  const statsGrid = document.querySelector('.stats-grid');
+  if (statsGrid) {
+    const statObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Animate counters
+            entry.target.querySelectorAll('.stat-number').forEach((el, i) => {
+              const target = parseInt((el as HTMLElement).dataset.target ?? '0', 10);
+              const duration = 1100;
+              const delay = i * 100;
+              setTimeout(() => {
+                const start = performance.now();
+                function step(now: number) {
+                  const progress = Math.min((now - start) / duration, 1);
+                  const eased = 1 - Math.pow(1 - progress, 3);
+                  el.textContent = String(Math.round(eased * target));
+                  if (progress < 1) requestAnimationFrame(step);
+                }
+                requestAnimationFrame(step);
+              }, delay);
+            });
+            statObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+    statObserver.observe(statsGrid);
+  }
+</script>
