@@ -40,7 +40,7 @@ The system reliably handled a high daily volume of customized emails across a la
   {
     slug: "job-hunter",
     title: "Agentic AI Job Hunter With Email Report",
-    impact: "Built a cost-optimized AI agentic loop that saved 3 hours/day in job search",
+    impact: "Saved 3 hours per day in job search with an AI agent doing the heavy lifting",
     image: "/images/feature-job-hunter.png",
     github: "https://github.com/nkeblawi/job-hunter",
     intraImages: [
@@ -112,7 +112,7 @@ This directly contributed to a 29% increase in membership sales. Plus, due to th
   {
     slug: "fitness-tracker-ml",
     title: "Fitness Activity Classification ML Model",
-    impact: "Caught target leakage on random split; adjusted train-test split and added frequency features to bring accuracy to 99.5%",
+    impact: "Correctly identifies gym exercises and number of reps 99.5% of the time",
     image: "/images/feature-fitness-tracker-ml.png",
     github: "https://github.com/nkeblawi/nk-fitness-tracker",
     intraImages: [
@@ -161,7 +161,7 @@ Instead of manually checking multiple weather sites or fragmented sources of inf
   {
     slug: "seo-analysis",
     title: "SEO Data Analysis for Organic Search Traffic",
-    impact: "Turned five disparate marketing data sources into a prioritized action plan that increased traffic 86% in 4 months",
+    impact: "Turned five separate marketing data sources into a prioritized action plan that increased traffic 86% in 4 months",
     image: "/images/feature-seo-analysis.png",
     github: null,
     intraImages: [
