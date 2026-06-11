@@ -94,7 +94,7 @@ However, if I were to build this today, I would use a vector database and a RAG 
     image: "/images/feature-customer-segmentation.png",
     github: "https://github.com/nkeblawi/nk-cust-segmentation",
     intraImages: [
-      { src: "/images/customer-segmentation/image-0.png", caption: "", section: "results", afterParagraph: 0 },
+      { src: "/images/customer-segmentation/image-0.png", caption: "", section: "results", afterParagraph: 1 },
     ],
     techStack: ["Python", "Flask", "scikit-learn", "KMeans", "GMM", "PCA", "pandas", "NumPy", "matplotlib", "mpld3", "joblib", "gunicorn", "Docker"],
     problem: `Marketing teams know their customers fall into distinct groups but lack an easy way to identify them. Assigning customers into groups via manual segmentation is tedious and doesn't scale, plus insights go stale quickly as customer behaviors change daily. I built a self-serve tool that helps marketers automatically segment their customer lists on an on-demand basis.`,
@@ -104,6 +104,8 @@ Under the hood, the app runs a full pipeline of custom transformers I wrote for 
 
 To make the tool fast and reproducible, the entire pipeline was pre-trained once and persisted with joblib, so each upload is scored instantly rather than retraining from scratch. All PII was stripped from the dataset before processing, keeping the workflow privacy-safe. The app was containerized with Docker and served in production via gunicorn, and the interactive plots were rendered using client-side JavaScript.`,
     results: `Using a dataset of several thousand users, the model partitioned the customer base into 6 distinct clusters, with fit quality evaluated automatically using silhouette scores and surfaced to the user with plain-English feedback (from "poor fit" through "strong segmentation").
+
+The following plot shows how the customers are distributed in 3D space, with each point colored according to its cluster label. Customers that are closest together are those who have similar product preferences and purchase patterns, and those far apart have very different preferences and purchase patterns.
 
 Because the model is unsupervised, it produced the groupings without classifications. The marketing team interpreted and labeled each cluster as a post-processing step, then applied the labeled segments to a live marketing campaign. With each group's characteristics defined, the team could then match product recommendations to customer preferences and target outreach accordingly.
 
@@ -116,8 +118,8 @@ This directly contributed to a 29% increase in membership sales. Plus, due to th
     image: "/images/feature-fitness-tracker-ml.png",
     github: "https://github.com/nkeblawi/nk-fitness-tracker",
     intraImages: [
-      { src: "/images/fitness-tracker-ml/image-0.png", caption: "", section: "results", afterParagraph: 0 },
-      { src: "/images/fitness-tracker-ml/image-1.png", caption: "", section: "results", afterParagraph: 2 },
+      { src: "/images/fitness-tracker-ml/image-0.png", caption: "", section: "results", afterParagraph: 1 },
+      { src: "/images/fitness-tracker-ml/image-1.png", caption: "", section: "results", afterParagraph: 4 },
     ],
     techStack: ["Python", "pandas", "NumPy", "SciPy", "scikit-learn", "XGBoost", "matplotlib", "seaborn", "Jupyter Notebooks"],
     problem: `Gym-goers often dislike having to log their exercises, sets, and reps in a notepad or on their phone because doing so takes away from workout time, and it's also tedious. So I developed a machine learning model that tracks the exercises and reps, so they don't have to.`,
@@ -128,13 +130,15 @@ The raw sensor data was chaotic from both macro- and micro-movements during exer
 I proceeded with cleaning and shaping the chaotic data to increase the signal-to-noise ratio so that a model can learn from it. Specifically, I smoothed out sensor glitches, filtered out high-frequency noise, and engineered features to capture how a movement oscillates over time rather than just its raw values.
 
 To test the model, I benchmarked six classifiers and validated them not just on a random split, but on a held-out participant (i.e., training on four people and testing on a fifth person) to ensure that the model generalizes to someone it had never seen.`,
-    results: `Both the Random Forest and neural network models reached 99.5% accuracy on the held-out participant, with XGBoost close behind at 99.1%. I chose Random Forest as the practical model because the neural network was far more computationally intensive for the same accuracy.
+    results: `Both the Random Forest and neural network models reached 99.5% accuracy on the held-out participant, with XGBoost close behind at 99.1%. I chose Random Forest as the practical model because the neural network was far more computationally intensive for the same accuracy. 
+
+The following confusion matrix showed that the Random Forest model only misclassified a small percentage of overhead presses as bench presses, and vice versa. The model correctly identified the other four exercises 100% of the time.
 
 The most interesting part of the results was catching subtle target leakage. On a random 75/25 split, a decision tree model scored 99.7%, which was suspiciously high and I suspected leakage. When I split the dataset by participant, trained the model on four participants and tested on a fifth, the accuracy dropped to 96.9% and exposed a specific failure mode: overhead presses misclassified as bench presses.
 
 Engineering frequency features using Fourier transformation and PCA brought accuracy back up to 99.5%, however. Plus, forward selection confirmed the most predictive signals were frequency-domain components, set duration, gyroscope readings, and the K-Means cluster label, with accuracy approaching 100% using only a handful of them.
 
-The repetition counter, using per-exercise tuned Butterworth low-pass filters and peak detection, predicted rep counts to within about one repetition of ground truth across every exercise.`,
+The repetition counter, using per-exercise tuned Butterworth low-pass filters and peak detection, predicted rep counts to within about one repetition of ground truth across every exercise (as shown below).`,
   },
   {
     slug: "weather-farming-pipeline",
@@ -177,6 +181,8 @@ The analysis covered four areas: 1) keyword gap and opportunity analysis to surf
     results: `The analysis replaced guesswork with a single, data-driven view of content and page performance, so the team could prioritize the content and keywords most likely to capture new customers.
 
 The results surfaced clear and concrete opportunities for the marketing team to prioritize. These included high-opportunity keywords and content gaps to target, underperforming pages to improve, and technical website issues to fix. Once the marketing team acted on those, organic search traffic increased by 86% within 4 months.
+
+Summary of findings after 4 months:
 
 ✅ Overall aggregate traffic increased by 86% in 4 months
 
