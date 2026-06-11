@@ -99,6 +99,22 @@ import { earlyCareer } from "../data/earlyCareer.js";
     </div>
   </section>
 
+  <!-- Tableau Dashboard -->
+  <section class="mb-20">
+    <h2 class="text-2xl font-semibold text-navy mb-3 text-center fade-up">Earthquake Tracking Dashboard</h2>
+    <p class="text-text-secondary text-center mb-8 fade-up">A Tableau Public dashboard tracking global earthquake activity across a 30-day period.</p>
+    <div class="tableau-wrapper fade-up">
+      <iframe
+        seamless
+        frameborder="0"
+        src="https://public.tableau.com/views/Earthquakelocations/EarthquakeTracker?:embed=yes&:display_count=yes&:showVizHome=no&:tabs=no&:toolbar=no"
+        width="1300"
+        height="820"
+        style="transform:scale(0.794);transform-origin:top left;display:block;"
+      ></iframe>
+    </div>
+  </section>
+
   <!-- Early Career -->
   <section>
     <h2 class="text-2xl font-semibold text-navy mb-1 text-center fade-up">Foundational Career Projects</h2>
@@ -124,6 +140,19 @@ import { earlyCareer } from "../data/earlyCareer.js";
   </section>
 
   <style>
+    .tableau-wrapper {
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      overflow: hidden;
+      width: 100%;
+    }
+    .tableau-wrapper iframe {
+      display: block;
+      transform-origin: top left;
+      width: 1300px;
+      height: 820px;
+    }
+
     .fade-up {
       opacity: 0;
       transform: translateY(22px);
@@ -151,5 +180,22 @@ import { earlyCareer } from "../data/earlyCareer.js";
       { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
     );
     document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+
+    // Responsive Tableau iframe scaling
+    const IFRAME_W = 1300;
+    const IFRAME_H = 820;
+    const TOOLBAR_H = 35; // px to clip off bottom (toolbar)
+
+    function scaleTableau() {
+      const wrapper = document.querySelector('.tableau-wrapper') as HTMLElement;
+      const iframe = wrapper?.querySelector('iframe') as HTMLElement;
+      if (!wrapper || !iframe) return;
+      const scale = wrapper.offsetWidth / IFRAME_W;
+      iframe.style.transform = `scale(${scale})`;
+      wrapper.style.height = `${(IFRAME_H - TOOLBAR_H) * scale}px`;
+    }
+
+    scaleTableau();
+    window.addEventListener('resize', scaleTableau);
   </script>
 </BaseLayout>
