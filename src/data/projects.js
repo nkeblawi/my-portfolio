@@ -83,7 +83,9 @@ The goal was to ensure its responses matched how the team actually answered cust
 For deployment, I exposed the model as an Azure OpenAI endpoint and connected it to the website through a serverless backend (Azure Functions) that brokered requests between the two. Access was restricted to paying members: the Function validated each user's membership token before calling the model, which kept the endpoint secure and bounded usage costs.
 
 I also built a custom JavaScript chat widget for the site. When a member sent a message, the widget posted it to the backend, which forwarded it to the Azure OpenAI endpoint, fetched the answer, and returned it to the widget in real time. Routing calls through the backend rather than calling Azure directly from the browser kept the API key and model server-side, so credentials were never exposed to end users.`,
-    results: `The chatbot automatically handled the vast majority of routine and repetitive questions, and that helped cut support-ticket volume by roughly 90% and clear a year's backlog of tickets. This freed the customer support team to focus on higher-value business priorities instead of answering the same questions over and over.`,
+    results: `The chatbot automatically handled the vast majority of routine and repetitive questions, and that helped cut support-ticket volume by roughly 90% and clear a year's backlog of tickets. This freed the customer support team to focus on higher-value business priorities instead of answering the same questions over and over.
+
+However, if I were to build this today, I would use a vector database and a RAG pipeline instead of embedding the FAQ directly in the system prompt. That way the model would be better grounded, with natural guardrails against hallucinating answers to questions outside the scope of the business.`,
   },
   {
     slug: "customer-segmentation",
